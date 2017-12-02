@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float accelerateMax;
-    public float accelerateDelta;
+    public float accelerateMax = 100.0f;
+    public float accelerateDelta = 5.0f;
 
     public float xMovement = 5.0f;
     public float yMovement = 5.0f;
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     float currentDeceleration = 0.0f;
 
     bool accelerating = false;
+
     // Use this for initialization
     void Start()
     {
@@ -116,6 +117,10 @@ public class Player : MonoBehaviour
 
     void LaunchMissile()
     {
+        Vector2 pos = transform.position;
+        pos.y += 0.5f;
 
+        GameObject obj = Instantiate(Resources.Load("Prefabs/Missile"), pos , transform.rotation) as GameObject;
+        obj.GetComponent<Missile>().SetOwner(this.gameObject);
     }
 }
