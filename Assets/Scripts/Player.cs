@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         //Accelerate
         if (Input.GetMouseButtonDown(0) && !accelerating)
         {
-            //on constant cloic
+            //we had more decelation to do but started accelerating again missing the needed decelation to go back to original pos
             currentAcceleration = currentDeceleration;
             accelerating = true;
             currentDeceleration = 0.0f;
@@ -100,11 +100,22 @@ public class Player : MonoBehaviour
 
         transform.position = pos;
 
+        //Fire
+        if(Input.GetMouseButtonDown(1))
+        {
+            LaunchMissile();
+        }
+
     }
 
     void CheckBoundary(ref Vector2 pos)
     {
         pos.x = Mathf.Clamp(pos.x, minPos.x, maxPos.x);
         pos.y = Mathf.Clamp(pos.y, minPos.y, maxPos.y);
+    }
+
+    void LaunchMissile()
+    {
+
     }
 }
