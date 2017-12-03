@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : BaseShip
 {
-    float time = 2.0f;
+    float time = 0.0f;
 
     public GameObject player;
     // Use this for initialization
@@ -34,7 +34,7 @@ public class Enemy : BaseShip
         Vector2 pos = transform.position;
         pos.y -= 0.5f;
 
-        GameObject obj = Instantiate(Resources.Load("Prefabs/Missile"), pos, transform.rotation) as GameObject;
+        GameObject obj = Instantiate(Resources.Load("Prefabs/EnemyMissile"), pos, transform.rotation) as GameObject;
         obj.GetComponent<Missile>().SetOwner(this.gameObject);
         obj.GetComponent<Missile>().target = player;
     }
