@@ -25,7 +25,7 @@ public class Missile : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        speed = 20.0f;
+        //speed = 20.0f;
         homing = true;
 
         time = Time.time;
@@ -36,7 +36,7 @@ public class Missile : MonoBehaviour {
         //later I might have to change this to base class of player and enemy
         if (owner != null)
         {
-            speed = owner.GetComponent<BaseShip>().accelerateDelta;
+            speed = owner.GetComponent<BaseShip>().accelerateDelta * 4;
         }
         
 	}
