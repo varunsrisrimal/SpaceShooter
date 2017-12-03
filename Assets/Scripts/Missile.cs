@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour {
 
+    public bool enableTopSpeed;
     GameObject owner;
     public GameObject target;
 
@@ -34,9 +35,13 @@ public class Missile : MonoBehaviour {
         maxPos = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
         //later I might have to change this to base class of player and enemy
-        if (owner != null)
+        if (owner != null && enableTopSpeed)
         {
             speed = owner.GetComponent<BaseShip>().accelerateDelta * 4;
+        }
+        else
+        {
+            speed = 5.0f;
         }
         
 	}
