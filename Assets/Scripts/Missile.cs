@@ -15,40 +15,51 @@ public class Missile : MonoBehaviour {
     //this is for the boundary check
     Vector2 minPos, maxPos;
 
+    bool homing;
+
     public Missile(GameObject obj)
     {
         owner = obj;
     }
 
-    bool homing = true;
 	// Use this for initialization
 	void Start ()
     {
+        speed = 20.0f;
+        homing = true;
+
+        time = Time.time;
+
         minPos = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         maxPos = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
         //later I might have to change this to base class of player and enemy
-        speed = owner.GetComponent<Player>().accelerateDelta;
-
-        if (target != null)
+        if (owner != null)
         {
-            targetPosition = target.transform.position;
+            speed = owner.GetComponent<BaseShip>().accelerateDelta;
         }
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        time += Time.deltaTime;
 
-        if (time > 1.0f && homing)
+        if (Time.time - time > 1.0f && target != null)
         {
             homing = false;
         }
 
+        if (target != null && homing)
+        {
+            targetPosition = target.transform.position;
+        }
+
         if(homing && target != null)
         {
-            transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime * speed);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
+
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPosition);
         }
         else
         {
@@ -56,12 +67,13 @@ public class Missile : MonoBehaviour {
         }
 
 
-        if(transform.position.x < minPos.x || transform.position.x > maxPos.x ||
+        if (transform.position.x < minPos.x || transform.position.x > maxPos.x ||
             transform.position.y < minPos.y || transform.position.y > maxPos.y)
         {
             Destroy(this.gameObject);
         }
 	}
+
 
     public void SetOwner(GameObject _owner)
     {
